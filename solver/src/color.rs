@@ -2,21 +2,21 @@ use strum_macros::{Display, EnumString};
 
 #[derive(Display, Debug, EnumString, PartialEq)]
 pub enum Color {
-    #[strum(serialize="y")]
+    #[strum(serialize = "y", serialize = "Y")]
     Yellow,
 
-    #[strum(serialize="r")]
+    #[strum(serialize = "r", serialize = "R")]
     Red,
 
-    #[strum(serialize="p")]
+    #[strum(serialize = "p", serialize = "P")]
     Purple,
 
-    #[strum(serialize="g")]
+    #[strum(serialize = "g", serialize = "G")]
     Green,
 
-    #[strum(serialize="o")]
+    #[strum(serialize = "o", serialize = "O")]
     Orange,
 
-    #[strum(serialize="0")]
+    #[strum(serialize = "0")]
     Blank,
 }
