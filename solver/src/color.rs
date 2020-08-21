@@ -1,6 +1,6 @@
 use strum_macros::{Display, EnumString};
 
-#[derive(Display, Debug, EnumString, PartialEq)]
+#[derive(Copy, Clone, Display, Debug, EnumString, PartialEq)]
 pub enum Color {
     #[strum(serialize = "y", serialize = "Y")]
     Yellow,
