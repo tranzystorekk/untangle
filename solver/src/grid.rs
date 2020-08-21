@@ -33,10 +33,10 @@ impl Grid {
     }
 
     pub fn ribbons(&self) -> impl Iterator<Item = ArrayView1<Color>> {
-        self.colors
-            .genrows()
-            .into_iter()
-            .chain(self.colors.gencolumns())
+        let rows = self.colors.genrows();
+        let cols = self.colors.gencolumns();
+
+        itertools::chain(rows, cols)
     }
 
     fn ribbon_index(&self, index: usize) -> RibbonIndex {
