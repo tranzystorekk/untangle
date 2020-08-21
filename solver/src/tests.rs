@@ -6,7 +6,7 @@ use ndarray::ArrayView;
 #[test]
 fn ribbons_iterates_over_rows_and_columns() {
     let fields = vec![Orange, Red, Blank, Red, Green, Purple];
-    let grid = Grid::from_vec(2, 3, fields);
+    let grid = Grid::from_vec_dims(fields, 2, 3);
     let mut ribbons = grid.ribbons();
 
     assert_eq!(ribbons.next(), Some(ArrayView::from(&[Orange, Red, Blank])));

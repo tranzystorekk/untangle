@@ -7,9 +7,9 @@ pub struct Grid {
 }
 
 impl Grid {
-    pub fn from_vec(rows: usize, cols: usize, data: Vec<Color>) -> Self {
+    pub fn from_vec_dims(v: Vec<Color>, rows: usize, cols: usize) -> Self {
         Grid {
-            colors: Array::from_shape_vec((rows, cols), data).unwrap(),
+            colors: Array::from_shape_vec((rows, cols), v).unwrap(),
         }
     }
 
