@@ -7,6 +7,7 @@ enum RibbonIndex {
     Column(usize),
 }
 
+#[derive(Clone)]
 pub struct Grid {
     colors: Array2<Color>,
 }
