@@ -40,6 +40,14 @@ impl Grid {
         itertools::chain(rows, cols)
     }
 
+    pub fn n_ribbons(&self) -> usize {
+        self.colors.nrows() + self.colors.ncols()
+    }
+
+    pub fn is_uncolored(&self) -> bool {
+        self.colors.iter().all(|&c| matches!(c, Color::Blank))
+    }
+
     fn ribbon_index(&self, index: usize) -> RibbonIndex {
         let n_rows = self.colors.nrows();
         if index >= n_rows {
