@@ -14,7 +14,7 @@ fn check_monocolor(ribbon: &ArrayView1<Color>) -> Option<Color> {
                 None => Some(Some(valid_color)),
                 st => st
                     .filter(|&current_color| current_color == valid_color)
-                    .map(|color| Some(color)),
+                    .map(Some),
             },
         })
         .flatten()
@@ -45,21 +45,21 @@ mod tests {
 
     #[test]
     fn check_monocolor_identifies_correct_ribbons() {
-        let ref r = ArrayView1::from(&[Red, Blank, Red, Red, Red]);
+        let r = &ArrayView1::from(&[Red, Blank, Red, Red, Red]);
 
         assert_eq!(check_monocolor(r), Some(Red));
     }
 
     #[test]
     fn check_monocolor_fails_on_multicolor_ribbons() {
-        let ref r = ArrayView1::from(&[Red, Green, Blank, Red]);
+        let r = &ArrayView1::from(&[Red, Green, Blank, Red]);
 
         assert_eq!(check_monocolor(r), None);
     }
 
     #[test]
     fn check_monocolor_fails_on_empty_ribbons() {
-        let ref r = ArrayView1::from(&[Blank, Blank, Blank]);
+        let r = &ArrayView1::from(&[Blank, Blank, Blank]);
 
         assert_eq!(check_monocolor(r), None);
     }
