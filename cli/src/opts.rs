@@ -7,6 +7,9 @@ use structopt::StructOpt;
 #[derive(Debug, StructOpt)]
 #[structopt(name = "untangle")]
 pub struct Opts {
+    #[structopt(short, long, help = "Show only the first N solutions")]
+    head: Option<usize>,
+
     #[structopt(parse(from_os_str))]
     input: Option<PathBuf>,
 }
@@ -26,5 +29,9 @@ impl Opts {
         };
 
         Ok(result)
+    }
+
+    pub fn head(&self) -> Option<usize> {
+        self.head
     }
 }

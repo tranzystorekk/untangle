@@ -46,8 +46,9 @@ fn main() -> std::io::Result<()> {
 
     let grid = Grid::from_vec_dims(fields, rows, cols);
     let solutions = Solver::solve(grid);
+    let n_displayed = opts.head().unwrap_or_else(|| solutions.len());
 
-    for (i, solution) in solutions.into_iter().enumerate() {
+    for (i, solution) in solutions.into_iter().enumerate().take(n_displayed) {
         println!("SOLUTION {}\n{}", i + 1, solution);
     }
 
