@@ -49,7 +49,10 @@ fn main() -> anyhow::Result<()> {
     let (rows, cols, fields) = process_input(input)?;
 
     ensure!(!fields.is_empty(), "Grid has no fields");
-    ensure!(fields.len() == rows * cols, "Incorrect grid (either dimensions or missing content)");
+    ensure!(
+        fields.len() == rows * cols,
+        "Incorrect grid (either dimensions or missing content)"
+    );
 
     let grid = Grid::from_vec_dims(fields, rows, cols);
     let solutions = Solver::solve(grid);
