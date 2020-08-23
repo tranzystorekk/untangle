@@ -17,6 +17,6 @@ pub enum Color {
     #[strum(serialize = "o", serialize = "O", to_string = "Orange")]
     Orange,
 
-    #[strum(serialize = "0", serialize = "*", to_string = "Blank")]
+    #[strum(serialize = "*", to_string = "Blank")]
     Blank,
 }
