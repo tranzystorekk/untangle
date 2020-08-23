@@ -25,7 +25,7 @@ fn init_searchspace(grid: &Grid) -> Vec<Vec<Move>> {
         .collect()
 }
 
-type Move = (usize, Color);
+pub type Move = (usize, Color);
 type Revert = (usize, Array1<Color>);
 
 pub struct Solver {
