@@ -12,17 +12,17 @@ fn process_input(input: impl BufRead) -> std::io::Result<(usize, usize, Vec<Colo
     let mut lines = input.lines();
     let (rows, cols) = lines
         .next()
-        .expect("something")?
+        .expect("Empty description")?
         .split_whitespace()
         .map(|s| s.parse().unwrap())
         .collect_tuple()
-        .expect("something2");
+        .expect("Incorrect shape description");
 
     let fields = lines
         .flat_map(|line| {
             line.unwrap()
                 .split_whitespace()
-                .map(|s| s.parse().expect("something3"))
+                .map(|s| s.parse().expect("Incorrect grid field description"))
                 .collect::<Vec<Color>>()
         })
         .collect();
