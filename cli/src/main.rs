@@ -1,3 +1,4 @@
+mod error;
 mod opts;
 
 use std::io::BufRead;
@@ -5,44 +6,50 @@ use std::io::BufRead;
 use itertools::Itertools;
 use structopt::StructOpt;
 
+use error::InputError;
 use opts::Opts;
 use solver::{Color, Grid, Solver};
 
-fn process_input(input: impl BufRead) -> std::io::Result<(usize, usize, Vec<Color>)> {
+#[macro_use]
+extern crate anyhow;
+
+fn process_input(input: impl BufRead) -> anyhow::Result<(usize, usize, Vec<Color>)> {
     let mut lines = input.lines();
-    let (rows, cols) = lines
+    let (maybe_rows, maybe_cols) = lines
         .next()
-        .expect("Empty description")?
+        .ok_or_else(|| InputError::EmptyFile)??
         .split_whitespace()
-        .map(|s| s.parse().unwrap())
+        .map(|s| s.parse().map_err(|_| InputError::IncorrectShape))
         .collect_tuple()
-        .expect("Incorrect shape description");
+        .ok_or(InputError::IncorrectShape)?;
+    let (rows, cols) = (maybe_rows?, maybe_cols?);
 
     let fields = lines
-        .flat_map(|line| {
+        .map(|line| {
             line.unwrap()
                 .split_whitespace()
-                .map(|s| s.parse().expect("Incorrect grid field description"))
-                .collect::<Vec<Color>>()
+                .map(str::parse)
+                .collect::<Result<Vec<Color>, _>>()
+                .map_err(|_| InputError::IncorrectGrid)
         })
-        .collect();
+        .try_fold(Vec::new(), |mut v, el| {
+            el.map(|ref mut part| {
+                v.append(part);
+                v
+            })
+        })?;
 
     Ok((rows, cols, fields))
 }
 
-fn main() -> std::io::Result<()> {
+fn main() -> anyhow::Result<()> {
     let opts = Opts::from_args();
     let input = opts.input()?;
 
     let (rows, cols, fields) = process_input(input)?;
 
-    if fields.is_empty() {
-        panic!("Grid has no fields!");
-    }
-
-    if fields.len() != rows * cols {
-        panic!("Incorrect grid (either dimensions or missing content)");
-    }
+    ensure!(!fields.is_empty(), "Grid has no fields");
+    ensure!(fields.len() == rows * cols, "Incorrect grid (either dimensions or missing content)");
 
     let grid = Grid::from_vec_dims(fields, rows, cols);
     let solutions = Solver::solve(grid);

@@ -14,5 +14,7 @@ path = "src/main.rs"
 
 solver = { path = "../solver" }
 
+anyhow = "1.0.32"
 itertools = "0.9.0"
 structopt = "0.3.16"
+thiserror = "1.0.20"
