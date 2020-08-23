@@ -8,7 +8,7 @@ use structopt::StructOpt;
 
 use error::InputError;
 use opts::Opts;
-use solver::{Color, Grid, Solution, Solver};
+use untangle_solver::{Color, Grid, Solution, Solver};
 
 #[macro_use]
 extern crate anyhow;

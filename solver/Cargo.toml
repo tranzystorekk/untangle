@@ -1,5 +1,5 @@
 [package]
-name = "solver"
+name = "untangle-solver"
 version = "0.1.0"
 authors = ["Marcin Puc <marcin.e.puc@gmail.com>"]
 edition = "2018"
