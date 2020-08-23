@@ -78,6 +78,28 @@ SOLUTION 1
 5 => Green
 ```
 
+### CLI
+
+Here`s how the help message looks:
+
+```console
+untangle <version>
+A solver for Strata game puzzles
+
+USAGE:
+    untangle [OPTIONS] [input]
+
+FLAGS:
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+
+OPTIONS:
+    -n, --number <N>    Show only the first N solutions
+
+ARGS:
+    <input>    File to read from; defaults to STDIN if not provided
+```
+
 ### Full example
 
 Let's solve one of the puzzles:
