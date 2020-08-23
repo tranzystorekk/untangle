@@ -21,11 +21,11 @@ impl Opts {
                 let file = File::open(path)?;
                 let reader = BufReader::new(file);
                 Box::new(reader)
-            },
+            }
             _ => {
                 let reader = BufReader::new(std::io::stdin());
                 Box::new(reader)
-            },
+            }
         };
 
         Ok(result)
