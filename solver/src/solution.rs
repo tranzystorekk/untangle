@@ -24,7 +24,7 @@ impl Solution {
 }
 
 impl fmt::Display for Solution {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         if !self.wildcards.is_empty() {
             let wild_print = self.wildcards.iter().join(" ");
             writeln!(f, "{} => *", wild_print)?;
