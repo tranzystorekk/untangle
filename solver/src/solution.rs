@@ -1,8 +1,8 @@
+use crate::types::Move;
+
 use std::fmt;
 
 use itertools::Itertools;
-
-use crate::solve::Move;
 
 pub struct Solution {
     moves: Vec<Move>,

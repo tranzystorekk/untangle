@@ -1,8 +1,9 @@
 use crate::color::Color;
 use crate::grid::Grid;
 use crate::solution::Solution;
+use crate::types::{Move, Revert};
 
-use ndarray::{Array1, ArrayView1};
+use ndarray::ArrayView1;
 
 fn check_monocolor(ribbon: &ArrayView1<Color>) -> Option<Color> {
     ribbon
@@ -25,9 +26,6 @@ fn init_searchspace(grid: &Grid) -> Vec<Vec<Move>> {
         .filter_map(|(i, ref ribbon)| check_monocolor(ribbon).map(|color| vec![(i, color)]))
         .collect()
 }
-
-pub type Move = (usize, Color);
-type Revert = (usize, Array1<Color>);
 
 pub struct Solver {
     unused: Vec<bool>,
