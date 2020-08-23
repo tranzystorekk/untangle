@@ -4,6 +4,9 @@
 
 Solve [Strata](http://www.graveck.com/strata/) puzzles like a (cheating) boss!
 
+Heavily inspired by the [strata-solver](https://github.com/tranzystorek-io/strata-solver) project.
+Written in some slick Rust.
+
 ## Usage
 
 ### Input format
