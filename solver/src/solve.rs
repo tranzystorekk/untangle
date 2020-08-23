@@ -1,5 +1,6 @@
 use crate::color::Color;
 use crate::grid::Grid;
+use crate::solution::Solution;
 
 use ndarray::{Array1, ArrayView1};
 
@@ -35,7 +36,7 @@ pub struct Solver {
 }
 
 impl Solver {
-    pub fn solve(grid: Grid) {
+    pub fn solve(grid: Grid) -> Vec<Solution> {
         let solver = Self::new(grid);
         solver.solve_internal()
     }
@@ -66,14 +67,17 @@ impl Solver {
         }
     }
 
-    fn solve_internal(mut self) {
+    fn solve_internal(mut self) -> Vec<Solution> {
         let mut searchspace = init_searchspace(&self.solved);
+        let mut solutions = Vec::new();
 
-        while let Some(sequence) = searchspace.pop() {
+        while let Some(mut sequence) = searchspace.pop() {
             self.prepare_reversion(&sequence);
 
             if self.solved.is_uncolored() {
-                todo!("what to do when solution found");
+                sequence.reverse();
+                let solution = Solution::new(sequence, &self.unused);
+                solutions.push(solution);
             } else {
                 for (i, ref ribbon) in self.solved.ribbons().enumerate() {
                     if let Some(color) = check_monocolor(ribbon) {
@@ -88,7 +92,7 @@ impl Solver {
             self.revert();
         }
 
-        todo!("return value for solve");
+        solutions
     }
 }
 
