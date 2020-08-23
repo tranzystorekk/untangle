@@ -8,7 +8,7 @@ use structopt::StructOpt;
 
 use error::InputError;
 use opts::Opts;
-use solver::{Color, Grid, Solver};
+use solver::{Color, Grid, Solution, Solver};
 
 #[macro_use]
 extern crate anyhow;
@@ -42,6 +42,18 @@ fn process_input(input: impl BufRead) -> anyhow::Result<(usize, usize, Vec<Color
     Ok((rows, cols, fields))
 }
 
+fn print_solutions(solutions: Vec<Solution>, n: usize) {
+    let formatter = solutions
+        .into_iter()
+        .enumerate()
+        .take(n)
+        .format_with("\n", |(i, solution), f| {
+            f(&format_args!("SOLUTION {}\n{}", i + 1, solution))
+        });
+
+    print!("{}", formatter);
+}
+
 fn main() -> anyhow::Result<()> {
     let opts = Opts::from_args();
     let input = opts.input()?;
@@ -58,9 +70,7 @@ fn main() -> anyhow::Result<()> {
     let solutions = Solver::solve(grid);
     let n_displayed = opts.head().unwrap_or_else(|| solutions.len());
 
-    for (i, solution) in solutions.into_iter().enumerate().take(n_displayed) {
-        println!("SOLUTION {}\n{}", i + 1, solution);
-    }
+    print_solutions(solutions, n_displayed);
 
     Ok(())
 }
