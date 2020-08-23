@@ -51,6 +51,7 @@ dependencies = [
 name = "cli"
 version = "0.1.0"
 dependencies = [
+ "itertools",
  "solver",
  "structopt",
 ]
