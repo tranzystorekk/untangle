@@ -1,9 +1,7 @@
 use crate::color::Color;
 use crate::grid::Grid;
 
-use ndarray::ArrayView1;
-
-type Move = (usize, Color);
+use ndarray::{Array1, ArrayView1};
 
 fn check_monocolor(ribbon: &ArrayView1<Color>) -> Option<Color> {
     ribbon
@@ -27,12 +25,70 @@ fn init_searchspace(grid: &Grid) -> Vec<Vec<Move>> {
         .collect()
 }
 
-pub fn solve(mut grid: Grid) {
-    let mut searchspace = init_searchspace(&grid);
-    let mut unused_ribbons = vec![true; grid.n_ribbons()];
+type Move = (usize, Color);
+type Revert = (usize, Array1<Color>);
 
-    while !searchspace.is_empty() {
-        todo!();
+pub struct Solver {
+    unused: Vec<bool>,
+    reverts: Vec<Revert>,
+    solved: Grid,
+}
+
+impl Solver {
+    pub fn solve(grid: Grid) {
+        let solver = Self::new(grid);
+        solver.solve_internal()
+    }
+
+    fn new(grid: Grid) -> Self {
+        Self {
+            unused: vec![true; grid.n_ribbons()],
+            reverts: Vec::new(),
+            solved: grid,
+        }
+    }
+
+    fn prepare_reversion(&mut self, sequence: &Vec<Move>) {
+        for &(index, _) in sequence {
+            self.unused[index] = false;
+
+            let mut reverted = self.solved.ribbon_mut(index);
+            self.reverts.push((index, reverted.to_owned()));
+
+            reverted.fill(Color::Blank);
+        }
+    }
+
+    fn revert(&mut self) {
+        while let Some((index, colors)) = self.reverts.pop() {
+            self.unused[index] = true;
+            self.solved.ribbon_mut(index).assign(&colors);
+        }
+    }
+
+    fn solve_internal(mut self) {
+        let mut searchspace = init_searchspace(&self.solved);
+
+        while let Some(sequence) = searchspace.pop() {
+            self.prepare_reversion(&sequence);
+
+            if self.solved.is_uncolored() {
+                todo!("what to do when solution found");
+            } else {
+                for (i, ref ribbon) in self.solved.ribbons().enumerate() {
+                    if let Some(color) = check_monocolor(ribbon) {
+                        let mut next = sequence.clone();
+                        next.push((i, color));
+
+                        searchspace.push(next);
+                    }
+                }
+            }
+
+            self.revert();
+        }
+
+        todo!("return value for solve");
     }
 }
 
