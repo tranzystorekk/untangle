@@ -27,7 +27,7 @@ fn init_searchspace(grid: &Grid) -> Vec<Vec<Move>> {
         .collect()
 }
 
-pub struct Solver {
+struct Solver {
     unused: Vec<bool>,
     solved: Grid,
 }
@@ -81,6 +81,10 @@ impl Solver {
 
         solutions
     }
+}
+
+pub fn solve(grid: Grid) -> Vec<Solution> {
+    Solver::solve(grid)
 }
 
 #[cfg(test)]

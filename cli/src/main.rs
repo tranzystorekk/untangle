@@ -8,7 +8,7 @@ use structopt::StructOpt;
 
 use error::InputError;
 use opts::Opts;
-use untangle_solver::{Color, Grid, Solution, Solver};
+use untangle_solver::{Color, Grid, Solution};
 
 #[macro_use]
 extern crate anyhow;
@@ -67,7 +67,7 @@ fn main() -> anyhow::Result<()> {
     );
 
     let grid = Grid::from_vec_dims(fields, rows, cols);
-    let solutions = Solver::solve(grid);
+    let solutions = untangle_solver::solve(grid);
     let n_displayed = opts.head().unwrap_or_else(|| solutions.len());
 
     print_solutions(solutions, n_displayed);

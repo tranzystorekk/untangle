@@ -7,7 +7,7 @@ mod types;
 pub use color::Color;
 pub use grid::Grid;
 pub use solution::Solution;
-pub use solve::Solver;
+pub use solve::solve;
 
 #[cfg(test)]
 mod tests;
