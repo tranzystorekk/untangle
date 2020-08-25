@@ -1,7 +1,7 @@
 use crate::color::Color;
 use crate::grid::Grid;
 use crate::solution::Solution;
-use crate::types::{Move, Revert};
+use crate::types::Move;
 
 use ndarray::ArrayView1;
 
@@ -29,7 +29,6 @@ fn init_searchspace(grid: &Grid) -> Vec<Vec<Move>> {
 
 pub struct Solver {
     unused: Vec<bool>,
-    reverts: Vec<Revert>,
     solved: Grid,
 }
 
@@ -42,35 +41,24 @@ impl Solver {
     fn new(grid: Grid) -> Self {
         Self {
             unused: vec![true; grid.n_ribbons()],
-            reverts: Vec::new(),
             solved: grid,
         }
     }
 
-    fn prepare_reversion(&mut self, sequence: &Vec<Move>) {
+    fn execute(&mut self, sequence: &Vec<Move>) {
         for &(index, _) in sequence {
             self.unused[index] = false;
-
-            let mut reverted = self.solved.ribbon_mut(index);
-            self.reverts.push((index, reverted.to_owned()));
-
-            reverted.fill(Color::Blank);
-        }
-    }
-
-    fn revert(&mut self) {
-        while let Some((index, colors)) = self.reverts.pop() {
-            self.unused[index] = true;
-            self.solved.ribbon_mut(index).assign(&colors);
+            self.solved.ribbon_mut(index).fill(Color::Blank);
         }
     }
 
     fn solve_internal(mut self) -> Vec<Solution> {
         let mut searchspace = init_searchspace(&self.solved);
         let mut solutions = Vec::new();
+        let initial = self.solved.clone();
 
         while let Some(mut sequence) = searchspace.pop() {
-            self.prepare_reversion(&sequence);
+            self.execute(&sequence);
 
             if self.solved.is_uncolored() {
                 sequence.reverse();
@@ -87,7 +75,8 @@ impl Solver {
                 }
             }
 
-            self.revert();
+            self.solved = initial.clone();
+            self.unused.iter_mut().for_each(|el| *el = true);
         }
 
         solutions
