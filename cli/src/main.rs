@@ -24,20 +24,13 @@ fn process_input(input: impl BufRead) -> anyhow::Result<(usize, usize, Vec<Color
         .ok_or(InputError::IncorrectShape)?;
     let (rows, cols) = (maybe_rows?, maybe_cols?);
 
-    let fields = lines
-        .map(|line| {
-            line.unwrap()
-                .split_whitespace()
-                .map(str::parse)
-                .collect::<Result<Vec<Color>, _>>()
-                .map_err(|_| InputError::IncorrectGrid)
-        })
-        .try_fold(Vec::new(), |mut v, el| {
-            el.map(|ref mut part| {
-                v.append(part);
-                v
-            })
-        })?;
+    let maybe_fields = lines
+        .map(|l| l.map(|s| s + " "))
+        .collect::<Result<String, _>>()?;
+    let fields = maybe_fields
+        .split_whitespace()
+        .map(|el| el.parse().map_err(|_| InputError::IncorrectGrid))
+        .collect::<Result<_, _>>()?;
 
     Ok((rows, cols, fields))
 }
