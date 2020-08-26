@@ -17,7 +17,7 @@ fn process_input(input: impl BufRead) -> anyhow::Result<(usize, usize, Vec<Color
     let mut lines = input.lines();
     let (maybe_rows, maybe_cols) = lines
         .next()
-        .ok_or_else(|| InputError::EmptyFile)??
+        .ok_or(InputError::EmptyFile)??
         .split_whitespace()
         .map(|s| s.parse().map_err(|_| InputError::IncorrectShape))
         .collect_tuple()
