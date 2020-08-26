@@ -5,7 +5,7 @@ use std::path::PathBuf;
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
-#[structopt(name = "untangle", about)]
+#[structopt(about)]
 pub struct Opts {
     #[structopt(short, long, name = "N", help = "Show only the first N solutions")]
     number: Option<usize>,
