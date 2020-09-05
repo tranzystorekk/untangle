@@ -10,10 +10,10 @@ fn check_monocolor(ribbon: &ArrayView1<Color>) -> Option<Color> {
         .iter()
         .try_fold(None, |state, &c| match c {
             Color::Blank => Some(state),
-            valid_color => match state {
-                None => Some(Some(valid_color)),
+            found_color => match state {
+                None => Some(Some(found_color)),
                 st => st
-                    .filter(|&current_color| current_color == valid_color)
+                    .filter(|&current_color| current_color == found_color)
                     .map(Some),
             },
         })
