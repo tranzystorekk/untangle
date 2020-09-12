@@ -3,15 +3,13 @@ mod opts;
 
 use std::io::BufRead;
 
+use anyhow::ensure;
 use itertools::Itertools;
 use structopt::StructOpt;
 
 use error::InputError;
 use opts::Opts;
 use untangle_solver::{Color, Grid, Solution};
-
-#[macro_use]
-extern crate anyhow;
 
 fn process_input(input: impl BufRead) -> anyhow::Result<(usize, usize, Vec<Color>)> {
     let mut lines = input.lines();
