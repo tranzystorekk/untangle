@@ -1,6 +1,9 @@
 mod error;
 mod opts;
 
+#[cfg(test)]
+mod tests;
+
 use std::io::BufRead;
 
 use anyhow::ensure;
