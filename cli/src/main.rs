@@ -22,13 +22,11 @@ fn process_input(input: impl BufRead) -> anyhow::Result<(usize, usize, Vec<Color
         .ok_or(InputError::IncorrectShape)?;
     let (rows, cols) = (maybe_rows?, maybe_cols?);
 
-    let maybe_fields = lines
-        .map(|l| l.map(|s| s + " "))
-        .collect::<Result<String, _>>()?;
-    let fields = maybe_fields
+    let fields_text: String = lines.map(|l| l.map(|s| s + " ")).try_collect()?;
+    let fields = fields_text
         .split_whitespace()
         .map(|el| el.parse().map_err(|_| InputError::IncorrectGrid))
-        .collect::<Result<_, _>>()?;
+        .try_collect()?;
 
     Ok((rows, cols, fields))
 }
