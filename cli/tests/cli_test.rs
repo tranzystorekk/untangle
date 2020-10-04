@@ -1,4 +1,4 @@
-use assert_cmd::Command;
+use assert_cmd::{crate_name, Command};
 
 #[test]
 fn untangle_succeeds_on_valid_input() {
@@ -8,7 +8,7 @@ fn untangle_succeeds_on_valid_input() {
     r * r r
     r r p g";
 
-    let mut cmd = Command::cargo_bin(env!("CARGO_PKG_NAME")).unwrap();
+    let mut cmd = Command::cargo_bin(crate_name!()).unwrap();
     let assert = cmd.write_stdin(input).assert();
 
     assert.success();
@@ -16,7 +16,7 @@ fn untangle_succeeds_on_valid_input() {
 
 #[test]
 fn untangle_fails_on_empty_file() {
-    let mut cmd = Command::cargo_bin(env!("CARGO_PKG_NAME")).unwrap();
+    let mut cmd = Command::cargo_bin(crate_name!()).unwrap();
     let assert = cmd.assert();
 
     assert.failure();
@@ -29,7 +29,7 @@ fn untangle_fails_on_shape_parse_error() {
     g * p
     p g g";
 
-    let mut cmd = Command::cargo_bin(env!("CARGO_PKG_NAME")).unwrap();
+    let mut cmd = Command::cargo_bin(crate_name!()).unwrap();
     let assert = cmd.write_stdin(input).assert();
 
     assert.failure();
@@ -43,7 +43,7 @@ fn untangle_fails_on_field_parse_error() {
     r * r r
     r r p g";
 
-    let mut cmd = Command::cargo_bin(env!("CARGO_PKG_NAME")).unwrap();
+    let mut cmd = Command::cargo_bin(crate_name!()).unwrap();
     let assert = cmd.write_stdin(input).assert();
 
     assert.failure();
@@ -58,7 +58,7 @@ fn untangle_fails_on_fields_number_not_matching_shape() {
     r r p g
     g g g g";
 
-    let mut cmd = Command::cargo_bin(env!("CARGO_PKG_NAME")).unwrap();
+    let mut cmd = Command::cargo_bin(crate_name!()).unwrap();
     let assert = cmd.write_stdin(input).assert();
 
     assert.failure();
@@ -66,7 +66,7 @@ fn untangle_fails_on_fields_number_not_matching_shape() {
 
 #[test]
 fn untangle_fails_on_nonexistent_flag() {
-    let mut cmd = Command::cargo_bin(env!("CARGO_PKG_NAME")).unwrap();
+    let mut cmd = Command::cargo_bin(crate_name!()).unwrap();
     let assert = cmd.arg("--nonsense").assert();
 
     assert.failure();
