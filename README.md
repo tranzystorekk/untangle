@@ -107,7 +107,7 @@ ARGS:
 
 Let's solve one of the puzzles:
 
-![Example Strata puzzle](img/strata_level.jpg)
+<img src="img/strata_level.jpg" alt="Example Strata puzzle" width="50%">
 
 First, create a puzzle description file:
 
@@ -133,4 +133,4 @@ SOLUTION 1
 
 Et voilà!
 
-![Solved Strata puzzle](img/strata_solved.jpg)
+<img src="img/strata_solved.jpg" alt="Solved Strata puzzle" width="50%">
