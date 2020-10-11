@@ -83,7 +83,7 @@ SOLUTION 1
 
 ### CLI
 
-Here`s how the help message looks:
+Here's how the help message looks:
 
 ```console
 untangle <version>
