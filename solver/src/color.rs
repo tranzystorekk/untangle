@@ -20,3 +20,9 @@ pub enum Color {
     #[strum(serialize = "*", to_string = "Blank")]
     Blank,
 }
+
+impl Color {
+    pub fn non_blank(&self) -> bool {
+        !matches!(self, Color::Blank)
+    }
+}

@@ -3,27 +3,23 @@ use crate::grid::Grid;
 use crate::solution::Solution;
 use crate::types::Move;
 
+use itertools::Itertools;
 use ndarray::ArrayView1;
 
-fn check_monocolor(ribbon: &ArrayView1<Color>) -> Option<Color> {
+fn check_monocolor(ribbon: ArrayView1<Color>) -> Option<Color> {
     ribbon
-        .iter()
-        .try_fold(None, |state, &c| match c {
-            Color::Blank => Some(state),
-            found_color => match state {
-                None => Some(Some(found_color)),
-                st => st
-                    .filter(|&current_color| current_color == found_color)
-                    .map(Some),
-            },
-        })
-        .flatten()
+        .into_iter()
+        .copied()
+        .filter(Color::non_blank)
+        .dedup()
+        .exactly_one()
+        .ok()
 }
 
 fn init_searchspace(grid: &Grid) -> Vec<Vec<Move>> {
     grid.ribbons()
         .enumerate()
-        .filter_map(|(i, ref ribbon)| check_monocolor(ribbon).map(|color| vec![(i, color)]))
+        .filter_map(|(i, ribbon)| check_monocolor(ribbon).map(|color| vec![(i, color)]))
         .collect()
 }
 
@@ -65,7 +61,7 @@ impl Solver {
                 let solution = Solution::new(sequence, &self.unused);
                 solutions.push(solution);
             } else {
-                for (i, ref ribbon) in self.solved.ribbons().enumerate() {
+                for (i, ribbon) in self.solved.ribbons().enumerate() {
                     if let Some(color) = check_monocolor(ribbon) {
                         let mut next = sequence.clone();
                         next.push((i, color));
@@ -96,21 +92,21 @@ mod tests {
 
     #[test]
     fn check_monocolor_identifies_correct_ribbons() {
-        let r = &ArrayView1::from(&[Red, Blank, Red, Red, Red]);
+        let r = ArrayView1::from(&[Red, Blank, Red, Red, Red]);
 
         assert_eq!(check_monocolor(r), Some(Red));
     }
 
     #[test]
     fn check_monocolor_fails_on_multicolor_ribbons() {
-        let r = &ArrayView1::from(&[Red, Green, Blank, Red]);
+        let r = ArrayView1::from(&[Red, Green, Blank, Red]);
 
         assert_eq!(check_monocolor(r), None);
     }
 
     #[test]
     fn check_monocolor_fails_on_empty_ribbons() {
-        let r = &ArrayView1::from(&[Blank, Blank, Blank]);
+        let r = ArrayView1::from(&[Blank, Blank, Blank]);
 
         assert_eq!(check_monocolor(r), None);
     }
