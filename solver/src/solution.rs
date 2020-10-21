@@ -13,12 +13,7 @@ impl Solution {
     pub fn new(moves: Vec<Move>, unused: &Vec<bool>) -> Self {
         Self {
             moves,
-            wildcards: unused
-                .iter()
-                .enumerate()
-                .filter(|&(_, &value)| value)
-                .map(|(i, _)| i)
-                .collect(),
+            wildcards: unused.iter().positions(|&not_used| not_used).collect(),
         }
     }
 }
