@@ -10,7 +10,7 @@ pub struct Solution {
 }
 
 impl Solution {
-    pub fn new(moves: Vec<Move>, unused: &Vec<bool>) -> Self {
+    pub fn new(moves: Vec<Move>, unused: &[bool]) -> Self {
         Self {
             moves,
             wildcards: unused.iter().positions(|&not_used| not_used).collect(),

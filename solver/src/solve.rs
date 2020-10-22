@@ -41,7 +41,7 @@ impl Solver {
         }
     }
 
-    fn execute(&mut self, sequence: &Vec<Move>) {
+    fn execute(&mut self, sequence: &[Move]) {
         for &(index, _) in sequence {
             self.unused[index] = false;
             self.solved.ribbon_mut(index).fill(Color::Blank);
