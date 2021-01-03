@@ -1,4 +1,4 @@
-use strum_macros::{Display, EnumString};
+use strum::{Display, EnumString};
 
 #[derive(Copy, Clone, Display, Debug, EnumString, PartialEq)]
 pub enum Color {

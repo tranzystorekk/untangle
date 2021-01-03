@@ -283,6 +283,9 @@ name = "strum"
 version = "0.19.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3924a58d165da3b7b2922c667ab0673c7b5fd52b5c19ea3442747bcb3cd15abe"
+dependencies = [
+ "strum_macros",
+]
 
 [[package]]
 name = "strum_macros"
@@ -379,7 +382,6 @@ dependencies = [
  "itertools",
  "ndarray",
  "strum",
- "strum_macros",
 ]
 
 [[package]]
