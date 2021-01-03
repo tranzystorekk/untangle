@@ -9,5 +9,5 @@ edition = "2018"
 [dependencies]
 
 itertools = "0.10.0"
-ndarray = "0.13.1"
+ndarray = "0.14.0"
 strum = { version = "0.19.2", features = ["derive"] }
