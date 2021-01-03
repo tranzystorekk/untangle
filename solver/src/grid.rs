@@ -1,6 +1,7 @@
 use crate::color::Color;
+use crate::types::{Ribbon, RibbonMut};
 
-use ndarray::{Array, Array2, ArrayView1, ArrayViewMut1};
+use ndarray::{Array, Array2};
 
 enum RibbonIndex {
     Row(usize),
@@ -19,21 +20,21 @@ impl Grid {
         }
     }
 
-    pub fn ribbon(&self, index: usize) -> ArrayView1<Color> {
+    pub fn ribbon(&self, index: usize) -> Ribbon {
         match self.ribbon_index(index) {
             RibbonIndex::Row(ind) => self.colors.row(ind),
             RibbonIndex::Column(ind) => self.colors.column(ind),
         }
     }
 
-    pub fn ribbon_mut(&mut self, index: usize) -> ArrayViewMut1<Color> {
+    pub fn ribbon_mut(&mut self, index: usize) -> RibbonMut {
         match self.ribbon_index(index) {
             RibbonIndex::Row(ind) => self.colors.row_mut(ind),
             RibbonIndex::Column(ind) => self.colors.column_mut(ind),
         }
     }
 
-    pub fn ribbons(&self) -> impl Iterator<Item = ArrayView1<Color>> {
+    pub fn ribbons(&self) -> impl Iterator<Item = Ribbon> {
         let rows = self.colors.genrows();
         let cols = self.colors.gencolumns();
 

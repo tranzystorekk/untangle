@@ -1,12 +1,11 @@
 use crate::color::Color;
 use crate::grid::Grid;
 use crate::solution::Solution;
-use crate::types::Move;
+use crate::types::{Move, Ribbon};
 
 use itertools::Itertools;
-use ndarray::ArrayView1;
 
-fn check_monocolor(ribbon: ArrayView1<Color>) -> Option<Color> {
+fn check_monocolor(ribbon: Ribbon) -> Option<Color> {
     ribbon
         .into_iter()
         .copied()
@@ -85,28 +84,28 @@ pub fn solve(grid: Grid) -> Vec<Solution> {
 
 #[cfg(test)]
 mod tests {
-    use ndarray::ArrayView1;
+    use crate::types::Ribbon;
 
     use super::check_monocolor;
     use crate::color::Color::*;
 
     #[test]
     fn check_monocolor_identifies_correct_ribbons() {
-        let r = ArrayView1::from(&[Red, Blank, Red, Red, Red]);
+        let r = Ribbon::from(&[Red, Blank, Red, Red, Red]);
 
         assert_eq!(check_monocolor(r), Some(Red));
     }
 
     #[test]
     fn check_monocolor_fails_on_multicolor_ribbons() {
-        let r = ArrayView1::from(&[Red, Green, Blank, Red]);
+        let r = Ribbon::from(&[Red, Green, Blank, Red]);
 
         assert_eq!(check_monocolor(r), None);
     }
 
     #[test]
     fn check_monocolor_fails_on_empty_ribbons() {
-        let r = ArrayView1::from(&[Blank, Blank, Blank]);
+        let r = Ribbon::from(&[Blank, Blank, Blank]);
 
         assert_eq!(check_monocolor(r), None);
     }
