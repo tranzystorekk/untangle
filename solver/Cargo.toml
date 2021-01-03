@@ -10,4 +10,4 @@ edition = "2018"
 
 itertools = "0.10.0"
 ndarray = "0.14.0"
-strum = { version = "0.19.2", features = ["derive"] }
+strum = { version = "0.20.0", features = ["derive"] }
