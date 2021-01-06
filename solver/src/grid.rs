@@ -8,7 +8,6 @@ enum RibbonIndex {
     Column(usize),
 }
 
-#[derive(Clone)]
 pub struct Grid {
     colors: Array2<Color>,
 }
@@ -57,5 +56,17 @@ impl Grid {
         }
 
         RibbonIndex::Row(index)
+    }
+}
+
+impl Clone for Grid {
+    fn clone(&self) -> Self {
+        Self {
+            colors: self.colors.clone(),
+        }
+    }
+
+    fn clone_from(&mut self, source: &Self) {
+        self.colors.clone_from(&source.colors)
     }
 }

@@ -70,7 +70,7 @@ impl Solver {
                 }
             }
 
-            self.solved = initial.clone();
+            self.solved.clone_from(&initial);
             self.unused.iter_mut().for_each(|el| *el = true);
         }
 
