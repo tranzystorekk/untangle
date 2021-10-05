@@ -7,13 +7,11 @@ use structopt::StructOpt;
 #[derive(Debug, StructOpt)]
 #[structopt(about)]
 pub struct Opts {
-    #[structopt(short, long, name = "N", help = "Show only the first N solutions")]
+    /// Show only the first N solutions
+    #[structopt(short, long, value_name = "N")]
     number: Option<usize>,
 
-    #[structopt(
-        parse(from_os_str),
-        help = "File to read from; defaults to STDIN if not provided"
-    )]
+    /// File to read from; defaults to STDIN if not provided
     input: Option<PathBuf>,
 }
 
