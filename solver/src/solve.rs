@@ -28,11 +28,6 @@ struct Solver {
 }
 
 impl Solver {
-    pub fn solve(grid: Grid) -> Vec<Solution> {
-        let solver = Self::new(grid);
-        solver.solve_internal()
-    }
-
     fn new(grid: Grid) -> Self {
         Self {
             unused: vec![true; grid.n_ribbons()],
@@ -47,7 +42,7 @@ impl Solver {
         }
     }
 
-    fn solve_internal(mut self) -> Vec<Solution> {
+    fn solve(mut self) -> Vec<Solution> {
         let mut searchspace = init_searchspace(&self.solved);
         let mut solutions = Vec::new();
         let initial = self.solved.clone();
@@ -79,7 +74,8 @@ impl Solver {
 }
 
 pub fn solve(grid: Grid) -> Vec<Solution> {
-    Solver::solve(grid)
+    let solver = Solver::new(grid);
+    solver.solve()
 }
 
 #[cfg(test)]
