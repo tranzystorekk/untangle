@@ -2,13 +2,13 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::PathBuf;
 
-use structopt::StructOpt;
+use clap::Parser;
 
-#[derive(Debug, StructOpt)]
-#[structopt(about)]
+#[derive(Debug, Parser)]
+#[clap(about)]
 pub struct Opts {
     /// Show only the first N solutions
-    #[structopt(short, long, value_name = "N")]
+    #[clap(short, long, value_name = "N")]
     number: Option<usize>,
 
     /// File to read from; defaults to STDIN if not provided

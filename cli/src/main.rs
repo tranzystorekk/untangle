@@ -4,8 +4,8 @@ mod opts;
 use std::io::BufRead;
 
 use anyhow::ensure;
+use clap::Parser;
 use itertools::Itertools;
-use structopt::StructOpt;
 
 use error::InputError;
 use opts::Opts;
@@ -44,7 +44,7 @@ fn print_solutions(solutions: Vec<Solution>, n: usize) {
 }
 
 fn main() -> anyhow::Result<()> {
-    let opts = Opts::from_args();
+    let opts = Opts::parse();
     let input = opts.input()?;
 
     let (rows, cols, fields) = process_input(input)?;
