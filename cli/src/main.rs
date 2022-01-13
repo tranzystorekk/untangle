@@ -40,7 +40,7 @@ fn print_solutions(solutions: Vec<Solution>, n: usize) {
             f(&format_args!("SOLUTION {}\n{}", i + 1, solution))
         });
 
-    print!("{}", formatter);
+    print!("{formatter}");
 }
 
 fn main() -> anyhow::Result<()> {

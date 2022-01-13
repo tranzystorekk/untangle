@@ -22,11 +22,11 @@ impl fmt::Display for Solution {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         if !self.wildcards.is_empty() {
             let wild_print = self.wildcards.iter().join(" ");
-            writeln!(f, "{} => *", wild_print)?;
+            writeln!(f, "{wild_print} => *")?;
         }
 
         for &(index, color) in &self.moves {
-            writeln!(f, "{} => {}", index, color)?;
+            writeln!(f, "{index} => {color}")?;
         }
 
         Ok(())
