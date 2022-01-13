@@ -8,6 +8,6 @@ edition = "2018"
 
 [dependencies]
 
-itertools = "0.10.0"
-ndarray = "0.14.0"
-strum = { version = "0.20.0", features = ["derive"] }
+itertools = "0.10"
+ndarray = "0.15"
+strum = { version = "0.22", features = ["derive"] }
