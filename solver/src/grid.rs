@@ -34,8 +34,8 @@ impl Grid {
     }
 
     pub fn ribbons(&self) -> impl Iterator<Item = Ribbon> {
-        let rows = self.colors.genrows();
-        let cols = self.colors.gencolumns();
+        let rows = self.colors.rows();
+        let cols = self.colors.columns();
 
         itertools::chain(rows, cols)
     }
