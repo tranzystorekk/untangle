@@ -12,7 +12,7 @@ description = "A solver for Strata game puzzles"
 untangle_solver = { path = "../solver" }
 
 anyhow = "1.0.37"
-clap = { version = "3.1", features = ["derive"] }
+clap = { version = "3.2", features = ["derive"] }
 itertools = "0.10.0"
 thiserror = "1.0.23"
 
