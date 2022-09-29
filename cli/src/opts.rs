@@ -5,10 +5,10 @@ use std::path::PathBuf;
 use clap::Parser;
 
 #[derive(Debug, Parser)]
-#[clap(about)]
+#[command(about)]
 pub struct Opts {
     /// Show only the first N solutions
-    #[clap(short, long, value_name = "N")]
+    #[arg(short, long, value_name = "N")]
     number: Option<usize>,
 
     /// File to read from; defaults to STDIN if not provided
